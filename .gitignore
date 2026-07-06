@@ -1,29 +1,24 @@
-# Virtual environment
-.venv/
-venv/
-
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
+node_modules/
+dist/
 
 # Environment
 .env
 
-# PyCharm
+# IDE
 .idea/
+.vscode/
 
 # macOS
 .DS_Store
 
-# Pytest
-.pytest_cache/
-
 # Playwright
-playwright-report/
 test-results/
+playwright-report/
+blob-report/
 
 # Allure
 allure-results/
 allure-report/
+
+# TypeScript
+*.tsbuildinfo
