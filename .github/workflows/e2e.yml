@@ -1,0 +1,51 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Install Allure CLI
+        run: |
+          ALLURE_VERSION=2.32.0
+          curl -Lo allure.tgz "https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz"
+          tar -zxf allure.tgz
+          echo "$GITHUB_WORKSPACE/allure-${ALLURE_VERSION}/bin" >> $GITHUB_PATH
+
+      - name: Run E2E tests
+        run: npm test
+
+      - name: Build Allure HTML report
+        if: always()
+        run: |
+          if [ -d allure-results ] && [ "$(ls -A allure-results)" ]; then
+            allure generate allure-results -o allure-report --clean
+          else
+            echo "No allure-results to build report from"
+          fi
+
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+          retention-days: 7
