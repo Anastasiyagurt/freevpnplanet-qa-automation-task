@@ -2,6 +2,10 @@
 
 E2E automation for the **Personal VPN (EN)** purchase flow on [personal.freevpnplanet.com](https://personal.freevpnplanet.com/).
 
+## Findings & recommendations
+
+[Найденные проблемы и рекомендации (Google Doc)](https://docs.google.com/document/d/152AV1sTXMSbT9eyaHyMBQWYA7pKLVj52OHgcljASpNY/edit)
+
 ## Stack
 
 - Playwright + TypeScript
